@@ -1,0 +1,27 @@
+---
+- hosts: ios
+  gather_facts: yes
+  connection: local
+ 
+  vars:
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+ 
+  - name: RUN " collect ios_facts "
+    ios_facts:
+      gather_subset:
+        - hardware
+      provider: "{{ provider }}"
+    register: ios_facts_out
+  - copy:  
+      content: "{{ ios_facts_out | to_nice_json }}"
+      dest: "Inventory/{{ inventory_hostname }}_iosfacts.json"
