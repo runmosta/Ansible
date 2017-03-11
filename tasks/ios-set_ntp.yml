@@ -1,0 +1,9 @@
+---
+- name: SET NTP CONFIG
+  ios_config:
+    parents: ntp server pool.ntp.org
+    provider: "{{ provider }}"
+    lines:
+      - ntp server pool.ntp.org
+    match: line
+  register: ntp_exists

@@ -1,0 +1,16 @@
+---  
+- name: Tester NTP CONFIG
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+      - show ntp associations
+  ignore_errors: yes
+  register: sh_ntp_server
+
+- set_fact:
+    ntp_exists: false
+  when: sh_ntp_server.failed is defined
+
+- set_fact:
+    ntp_exists: true
+  when: sh_ntp_server.failes is undefined

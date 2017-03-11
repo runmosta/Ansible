@@ -1,0 +1,21 @@
+---  
+- gather_facts: false
+  hosts: ios
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}" 
+
+  - include: ~/project/Ansible/tasks/show_run.yml
+  - include: ~/project/Ansible/tasks/ios-check_ntp.yml
+  - include: ~/project/Ansible/tasks/ios-set_ntp.yml
+    when: sh_ntp_server.failes is undefined
