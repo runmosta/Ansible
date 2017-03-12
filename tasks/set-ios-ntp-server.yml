@@ -1,0 +1,12 @@
+---
+-  name: "SET NTP SERVER"
+   when: "(item not in get_ntp_config.stdout_lines[3])"
+   with_items: "{{ ntp_servers }}"
+   register: set_ntp_server
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_ntp_server.changed == true)"
+  set_fact: configured=true

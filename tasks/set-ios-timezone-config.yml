@@ -1,0 +1,11 @@
+---
+- name: "SET TIMEZONE"
+  when: "(timezone is defined) and (timezone != get_ntp_config.stdout_lines[0][0])"
+  register: set_timezone
+  ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ timezone }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_timezone.changed == true)"
+  set_fact: configured=true

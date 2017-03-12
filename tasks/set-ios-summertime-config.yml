@@ -1,0 +1,11 @@
+---
+- name: "SET SUMMERTIME"
+  when: "(summertime is defined) and (summertime != get_ntp_config.stdout_lines[1][0])"
+  register: set_summertime
+  ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ summertime }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_timezone.changed == true)"
+  set_fact: configured=true

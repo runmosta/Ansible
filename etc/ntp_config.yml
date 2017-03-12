@@ -1,0 +1,8 @@
+timezone: "clock timezone CET 1 0"
+summertime: "clock summer-time CEST recurring last Sun Mar 2:00 last Sun Oct 3:00"
+# ntp_source: "ntp source {{int_ntp_src}}"
+ntp_servers:
+- "ntp server pool.ntp.org"
+- "ntp server 192.168.16.30"
+
+#ntp_source: "ntp source Ethernet0/0"

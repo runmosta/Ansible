@@ -1,0 +1,12 @@
+---
+- name: "REMOVE NTP SERVER"
+  when: "(get_ntp_config.stdout_lines[3][0] != '') and (item not in ntp_servers)"
+  with_items: "{{ get_ntp_config.stdout_lines[3] }}"
+  register: remove_ntp_server
+  ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "no {{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(remove_ntp_server.changed == true)"
+  set_fact: configured=true

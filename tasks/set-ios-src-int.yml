@@ -1,0 +1,10 @@
+- name: "SET NTP SOURCE"
+  when: "(ntp_source is defined) and (ntp_source != get_ntp_config.stdout_lines[2][0])"
+  register: set_ntp_source
+  ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ ntp_source }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_ntp_source.changed == true)"
+  set_fact: configured=true

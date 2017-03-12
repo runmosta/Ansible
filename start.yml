@@ -13,9 +13,16 @@
         host: "{{ inventory_hostname }}"
         username: "{{ creds['username'] }}"
         password: "{{ creds['password'] }}"
-        auth_pass: "{{ creds['auth_pass'] }}" 
+        auth_pass: "{{ creds['auth_pass'] }}"
 
-  - include: ~/project/Ansible/tasks/show_run.yml
-  - include: ~/project/Ansible/tasks/ios-check_ntp.yml
-  - include: ~/project/Ansible/tasks/ios-set_ntp.yml
-    when: sh_ntp_server.failes is undefined
+  - name: OBTAIN CONFIGURATION
+    include_vars: ~/project/Ansible/etc/ntp_config.yml
+
+  - include: ~/project/Ansible/tasks/get-ios-ntp-config.yml
+  - include: ~/project/Ansible/tasks/set-ios-timezone-config.yml
+  - include: ~/project/Ansible/tasks/set-ios-summertime-config.yml
+  - include: ~/project/Ansible/tasks/rem-ios-summertime.yml
+  - include: ~/project/Ansible/tasks/set-ios-src-int.yml 
+  - include: ~/project/Ansible/tasks/rem-ios-src-int.yml
+  - include: ~/project/Ansible/tasks/set-ios-ntp-server.yml
+  - include: ~/project/Ansible/tasks/rem-ios-ntp-server.yml

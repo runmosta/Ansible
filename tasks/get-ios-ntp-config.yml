@@ -1,0 +1,10 @@
+---
+- name: "GET NTP CONFIGURATION"
+  register: get_ntp_config
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+        - "show running-config | include clock timezone"
+        - "show running-config | include clock summer-time"
+        - "show running-config | include ntp source"
+        - "show running-config | include ntp server"

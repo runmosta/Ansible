@@ -1,0 +1,9 @@
+- name: "SAVE CONFIGURATION"
+    when: "(configured is defined) and (configured == true)"
+    register: save_config
+    ios_command: 
+    provider: "{{ provider }}"
+       commands: 
+        - "write memory"
+#    - 
+#      debug: var=save_config
