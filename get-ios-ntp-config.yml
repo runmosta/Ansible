@@ -1,0 +1,30 @@
+---  
+- gather_facts: false
+  hosts: ios
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}" 
+
+  - name: OBTAIN CONFIGURATION
+    include_vars: ~/project/Ansible/etc/ntp_config.yml
+
+  - name: "GET NTP CONFIGURATION"
+    register: get_ntp_config
+    ios_command:
+      provider: "{{ provider }}"
+      commands:
+        - "show running-config | include clock timezone"
+        - "show running-config | include clock summer-time"
+        - "show running-config | include ntp source"
+        - "show running-config | include ntp server"
+  - debug: var=get_ntp_config.stdout_lines

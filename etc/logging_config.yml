@@ -1,0 +1,7 @@
+facility: "logging facility local3"
+trap: "logging trap errors"
+log_buffer: "logging buffered 128000"
+log_servers:
+- "logging host 192.168.16.40"
+
+#ntp_source: "ntp source Ethernet0/0"

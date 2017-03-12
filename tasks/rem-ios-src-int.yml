@@ -1,5 +1,5 @@
 -  name: "REMOVE NTP SOURCE"
-   when: "(ntp_source is not defined) and (get_ntp_config.stdout_lines[2][0] != \"\")"
+   when: "(mgmt_source is not defined) and (get_ntp_config.stdout_lines[2][0] != \"\")"
    register: remove_ntp_source
    ios_config: 
     provider: "{{ provider }}"

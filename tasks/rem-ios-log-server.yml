@@ -1,0 +1,12 @@
+---
+- name: "REMOVE LOGGING SERVER"
+  when: "(get_log_config.stdout_lines[3][0] != '') and (item not in log_servers)"
+  with_items: "{{ get_log_config.stdout_lines[3] }}"
+  register: remove_logging_server
+  ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "no {{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(remove_logging_server.changed == true)"
+  set_fact: configured=true

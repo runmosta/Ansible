@@ -1,0 +1,12 @@
+---
+-  name: "SET LOGGING SOURCE INTERFACE"
+   when: "(item not in get_log_config.stdout_lines[3][0])"
+   with_items: "{{ log_source }}"
+   register: set_log_source
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_log_source.changed == true)"
+  set_fact: configured=true

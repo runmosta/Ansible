@@ -1,0 +1,12 @@
+---
+-  name: "SET LOGGING SERVER"
+   when: "(item not in get_log_config.stdout_lines[3])"
+   with_items: "{{ log_servers }}"
+   register: set_log_server
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_log_server.changed == true)"
+  set_fact: configured=true

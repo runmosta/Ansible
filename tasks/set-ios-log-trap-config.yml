@@ -1,0 +1,12 @@
+---
+-  name: "SET LOGGING TRAP"
+   when: "(item not in get_log_config.stdout_lines[2][0])"
+   with_items: "{{ trap }}"
+   register: set_log_trap
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_log_trap.changed == true)"
+  set_fact: configured=true

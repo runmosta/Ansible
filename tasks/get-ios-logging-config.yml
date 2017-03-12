@@ -1,0 +1,11 @@
+---
+- name: "GET LOGGING CONFIGURATION"
+  register: get_log_config
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+      - "show running-config | include logging facility"
+      - "show running-config | include logging trap"
+      - "show running-config | include logging source"
+      - "show running-config | include logging host"
+      - "show running-config | include logging buffered"

@@ -1,0 +1,10 @@
+-  name: "REMOVE LOGGING SOURCE"
+   when: "(log_source is not defined) and (get_log_config.stdout_lines[2][0] != \"\")"
+   register: remove_log_source
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "no {{ get_log_config.stdout_lines[2][0] }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(remove_log_source.changed == true)"
+  set_fact: configured=true

@@ -1,0 +1,12 @@
+---
+-  name: "SET LOGGING FACILITY"
+   when: "(item not in get_log_config.stdout_lines[0][0])"
+   with_items: "{{ facility }}"
+   register: set_log_facility
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_log_facility.changed == true)"
+  set_fact: configured=true

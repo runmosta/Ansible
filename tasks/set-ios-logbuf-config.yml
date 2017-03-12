@@ -1,0 +1,12 @@
+---
+-  name: "SET LOGGING Buffer"
+   when: "(item not in get_log_config.stdout_lines[4])"
+   with_items: "{{ log_buffer }}"
+   register: set_log_buffer
+   ios_config: 
+    provider: "{{ provider }}"
+    lines: 
+      - "{{ item }}"
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_log_buffer.changed == true)"
+  set_fact: configured=true
