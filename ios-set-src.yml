@@ -1,0 +1,26 @@
+---
+- hosts: ios
+  gather_facts: false
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}" 
+
+  - name: OBTAIN CONFIGURATION
+    include_vars: ~/project/Ansible/etc/ntp_config.yml
+
+  - name: SET SCRIPT CONFIG
+    ios_config:
+      provider: "{{ provider }}"
+      src: "enable_logging.cfg"
+    register: output
+  - debug: var=output  
