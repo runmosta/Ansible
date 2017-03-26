@@ -1,0 +1,9 @@
+---
+  - name: RUN " Sets vty 0 15 to ssh only "
+    ios_config:
+      save: true
+      provider: "{{ provider }}"
+      lines:
+        - 'file prompt quiet'
+        - 'line vty 0 15'
+        - 'transport input ssh'  

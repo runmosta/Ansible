@@ -1,0 +1,32 @@
+---
+- hosts: trd-kont
+  gather_facts: yes
+  connection: local
+ 
+  vars:
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: ~/project/Ansible/info/secrets-ise.yml
+
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+
+  - name: RUN " Collect router with telnet enablet "
+    ios_command:
+      provider: "{{ provider }}"
+      commands:
+        - 'show terminal | inc Allowed input'
+    register: telnet_facts_out
+#  - debug: var=telnet_facts_out.stdout
+
+# Check if telnet_facts_out = Allowed input transports are telnet ssh. If not it will set
+# run the playbook ios-transport.yml
+  - include: tasks/ios-transport-ssh.yml
+    static: no
+    when: "'Allowed input transports are telnet ssh.' in telnet_facts_out.stdout"
+
