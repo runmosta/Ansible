@@ -1,0 +1,6 @@
+---
+# file ~/project/Ansible/group_vars/all
+# This file contains info for all hosts 
+ntp_servers:
+- "ntp server pool.ntp.org"
+- "ntp server 192.168.16.30"

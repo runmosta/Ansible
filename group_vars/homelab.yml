@@ -1,0 +1,3 @@
+---
+  var_platform: "cisco_ios"
+  var_connection: "netmiko_telnet"

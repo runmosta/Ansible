@@ -1,0 +1,15 @@
+---
+#  - include: ~/project/Ansible/getinfo/get_vlans.yml  
+- ntc_show_command:
+    platform: "{{ var_platform }}"
+    connection: "{{var_connection}}"
+    command: 'show vlan'
+    host: "{{ inventory_hostname }}"
+    username: "{{ creds['username'] }}"
+    password: "{{ creds['password'] }}"
+    secret: "{{ creds['auth_pass'] }}"
+  register: get_vlan_db
+- debug: var=get_vlan_db
+- copy:  
+    content: "{{ get_vlan_db | to_nice_json }}"
+    dest: 'host_vars/{{ inventory_hostname }}_vlan.json'
