@@ -1,0 +1,26 @@
+---
+#  - include: ~/project/Ansible/getinfo/get_vlans.yml  
+- ntc_show_command:
+    platform: "{{ var_platform }}"
+    connection: "{{var_connection}}"
+    command: 'show cdp neighbor detail'
+    host: "{{ inventory_hostname }}"
+    username: "{{ creds['username'] }}"
+    password: "{{ creds['password'] }}"
+    secret: "{{ creds['auth_pass'] }}"
+  register: get_cdp_db
+#- debug: var=get_cdp_db
+
+- name: Save show_int
+  set_fact:
+    cdp_info: "{{ get_cdp_db.response }}"
+#- debug: var=cdp_info
+- debug: var=cdp_info[0].destination_host
+- name: create a new file with lineinfile
+  lineinfile: dest=etc/test.conf 
+              line="{{cdp_info[0].destination_host}}"
+              state=present
+              create=True
+#- copy:  
+#    content: "{{ get_vlan_db | to_nice_json }}"
+#    dest: 'host_vars/{{ inventory_hostname }}_vlan.json'
