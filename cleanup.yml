@@ -1,0 +1,27 @@
+---  
+- gather_facts: false
+  hosts: ios
+  connection: local
+
+  tasks:
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+
+#  - name: OBTAIN CONFIGURATION
+#    include_vars: ~/project/Ansible/etc/ntp_config.yml
+
+  - include: ~/project/Ansible/getinfo/get-ios-access-config.yml
+ # - include: ~/project/Ansible/tasks/get-ios-ntp-config.yml
+ # - include: ~/project/Ansible/tasks/set-ios-timezone-config.yml
+ # - include: ~/project/Ansible/tasks/set-ios-summertime-config.yml
+ # - include: ~/project/Ansible/tasks/rem-ios-summertime.yml
+ # - include: ~/project/Ansible/tasks/set-ios-src-int.yml 
+ # - include: ~/project/Ansible/tasks/rem-ios-src-int.yml
+ # - include: ~/project/Ansible/tasks/set-ios-ntp-server.yml
+ # - include: ~/project/Ansible/tasks/rem-ios-ntp-server.yml

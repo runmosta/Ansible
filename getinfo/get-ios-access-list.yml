@@ -1,30 +1,12 @@
 ---
-- name: GET STRUCTURED DATA BACK FROM CLI DEVICES
-  hosts: ios
-  connection: local
-  gather_facts: False
-
-  tasks:
-
-  - name: OBTAIN LOGIN CREDENTIALS
-    include_vars: info/secrets-ise.yml
-
-  - name: DEFINE PROVIDER
-    set_fact:
-      provider:
-        host: "{{ inventory_hostname }}"
-        username: "{{ creds['username'] }}"
-        password: "{{ creds['password'] }}"
-        auth_pass: "{{ creds['auth_pass'] }}"
-
-  - name: GET INVENTORY INFO 
-    ntc_show_command:
-      connection: ssh
-      template_dir: /home/runmosta/project/Ansible/ntc-templates/templates
-      platform: "{{ var_plattform }}"
-      username: "{{ creds['username'] }}"
-      password: "{{ creds['password'] }}"
-      host: "{{ inventory_hostname }}"
-      command: 'show access-list'
-    register: get_acc_config
-  - debug: var=get_acc_config
+- name: GET INVENTORY INFO 
+  ntc_show_command:
+  connection: ssh
+    template_dir: /home/runmosta/project/Ansible/ntc-templates/templates
+    platform: "{{ var_plattform }}"
+    username: "{{ creds['username'] }}"
+    password: "{{ creds['password'] }}"
+    host: "{{ inventory_hostname }}"
+    command: 'show access-list'
+  register: get_acc_config
+- debug: var=get_acc_config
