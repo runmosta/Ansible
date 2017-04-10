@@ -1,0 +1,12 @@
+---
+- name: "GET ACCESS LIST NAME VTY"
+  register: get_acc_config
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+      - "sh running-config partition line | inc access-class"
+- set_fact:
+    vty_access_name: get_acc_config
+
+
+   

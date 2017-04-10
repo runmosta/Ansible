@@ -1,0 +1,11 @@
+---
+- debug: var=ip_access_list_name
+- name: Configure TEST-ACL
+  ios_config:
+    provider: "{{provider}}"
+    lines:
+      "{{ ip_access_source}}"
+    parents: "{{ip_access_list_name}}"
+    before: "{{['no ' + ip_access_list_name]}}" 
+    match: exact
+    replace: block

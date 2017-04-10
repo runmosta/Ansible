@@ -1,0 +1,40 @@
+---  
+- gather_facts: false
+  hosts: ios
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+
+  - name: OBTAIN CONFIGURATION
+    include_vars: ~/project/Ansible/etc/access-list_config.yml
+#    include_vars: ~/project/Ansible/etc/ntp_config.yml
+
+  - include: ~/project/Ansible/getinfo/get-ios-acc-vty.yml
+  - include: ~/project/Ansible/getinfo/get-ios-access-config.yml
+
+  - include: ~/project/Ansible/setconfig/set-ios-access-list.yml
+    when: not(
+            (vty_access_name is undefined)
+            or
+            (vty_access_name is none)
+            or
+            (vty_access_name | trim == '')
+          )
+ # - include: ~/project/Ansible/tasks/get-ios-ntp-config.yml
+ # - include: ~/project/Ansible/tasks/set-ios-timezone-config.yml
+ # - include: ~/project/Ansible/tasks/set-ios-summertime-config.yml
+ # - include: ~/project/Ansible/tasks/rem-ios-summertime.yml
+ # - include: ~/project/Ansible/tasks/set-ios-src-int.yml 
+ # - include: ~/project/Ansible/tasks/rem-ios-src-int.yml
+ # - include: ~/project/Ansible/tasks/set-ios-ntp-server.yml
+ # - include: ~/project/Ansible/tasks/rem-ios-ntp-server.yml

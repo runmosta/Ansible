@@ -1,0 +1,12 @@
+---
+- name: GET ACCESS-LIST INFO 
+  ntc_show_command:
+    connection: ssh
+    template_dir: /home/runmosta/project/Ansible/ntc-templates/templates
+    platform: "{{ var_plattform }}"
+    username: "{{ creds['username'] }}"
+    password: "{{ creds['password'] }}"
+    host: "{{ inventory_hostname }}"
+    command: 'show access-list'
+  register: get_acc_config
+- debug: var=get_acc_config
