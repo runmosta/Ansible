@@ -1,0 +1,10 @@
+---
+- name: RUN 'SHOW VERSION'
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+        - show run
+  register: version
+- copy:  
+    content: "{{ version.stdout[0] }}"
+    dest: "~/project/Ansible/CFGS/{{ inventory_hostname }}.txt"  

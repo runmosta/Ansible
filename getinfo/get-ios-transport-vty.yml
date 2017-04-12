@@ -1,0 +1,12 @@
+---
+- name: RUN " Collect router with telnet enablet "
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+      - 'show running-config | include transport input'
+  register: telnet_facts_out
+# - debug: var=telnet_facts_out.stdout_lines[0][0]
+- name: "Set fact vty transport"
+  set_fact: 
+    get_vty_transport: "{{ telnet_facts_out.stdout_lines[0][0] }}"
+# - debug: var=get_vty_transport

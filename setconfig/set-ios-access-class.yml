@@ -1,0 +1,8 @@
+---
+- name: Set access-class mgmt-in
+  ios_config:
+    provider: "{{provider}}"
+    lines:
+      - line vty 0 15
+      - "{{ default_vty_access_name }}"
+ 

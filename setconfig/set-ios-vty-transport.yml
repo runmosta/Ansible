@@ -1,0 +1,15 @@
+---
+- name: RUN " Sets vty 0 15 to ssh only "
+  when: "(get_vty_transport not in var_vty_transport)"
+  with_items: "{{ var_vty_transport }}"
+  register: set_vty_facility
+  ios_config:
+    save: true
+    provider: "{{ provider }}"
+    lines:
+      - 'file prompt quiet'
+      - 'line vty 0 15'
+      - 'transport input ssh'
+- name: "POSTPONE CONFIGURATION SAVE"
+  when: "(set_vty_facility.changed == true)"
+  set_fact: configured=true 

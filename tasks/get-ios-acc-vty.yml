@@ -1,0 +1,15 @@
+---
+- name: "GET ACCESS LIST NAME VTY"
+  register: get_acc_config
+  ios_command:
+    provider: "{{ provider }}"
+    commands:
+      - "sh running-config partition line | inc access-class"
+- debug: var=get_acc_config
+- set_fact:
+    vty_access_name: get_acc_config
+
+    {{get_acc_config.stdout_line |
+        map('regex_replace'
+        map('regex_search'(?<=class )(\w+-\w+|\w+) |
+        map('join') | list }}
