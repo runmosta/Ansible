@@ -1,0 +1,5 @@
+---
+- name: Generate configuration files
+  template: src=router_cisco.j2 dest=/home/runmosta/project/Ansible/CFGS/{{item.hostname}}.cfg
+  with_items: "{{ cisco_template }}"
+ 

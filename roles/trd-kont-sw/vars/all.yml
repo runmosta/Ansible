@@ -1,0 +1,9 @@
+---
+
+vlans:
+  - id: 10
+    name: web_servers
+  - id: 20
+    name: app_servers
+  - id: 30
+    name: db_servers

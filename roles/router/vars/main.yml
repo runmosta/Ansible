@@ -1,0 +1,12 @@
+---
+cisco_template:
+  - { hostname: homelab-r1, as: 10 }
+  - { hostname: homelab-r2, as: 10 }
+
+cisco_loopback:
+- { name: loopback 0, address: 1.1.1.1, network: 1.1.1.0, mask: 255.255.255.0 }
+- { name: loopback 1, address: 11.11.11.11, network: 11.11.11.0, mask: 255.255.255.0 }
+
+cisco_neighbors:
+- { id: 172.16.2.2, as: 30 }
+- { id: 172.16.3.2, as: 20 }
