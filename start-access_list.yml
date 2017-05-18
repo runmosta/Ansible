@@ -1,0 +1,31 @@
+---  
+- gather_facts: false
+  hosts: ios
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secrets.yaml
+ 
+  - name: DEFINE PROVIDER
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+
+  - name: OBTAIN CONFIGURATION
+    include_vars: ~/project/Ansible/etc/logging_config.yml
+
+  - include: ~/project/Ansible/tasks/get-ios-logging-config.yml
+  #- debug: var=get_log_config.stdout_lines[0][0]
+  - include: ~/project/Ansible/tasks/set-ios-log-facility-config.yml
+  #- debug: var=get_log_config.stdout_lines[0][0]
+  - include: ~/project/Ansible/tasks/set-ios-log-trap-config.yml
+  - include: ~/project/Ansible/tasks/set-ios-log-server.yml
+  - include: ~/project/Ansible/tasks/rem-ios-log-server.yml
+  - include: ~/project/Ansible/tasks/set-ios-logbuf-config.yml
+  - include: ~/project/Ansible/tasks/set-ios-log-src-int.yml 
+  - include: ~/project/Ansible/tasks/rem-ios-log-src-int.yml
+ 
