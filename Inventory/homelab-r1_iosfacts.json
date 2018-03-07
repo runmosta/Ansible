@@ -1,0 +1,79 @@
+{
+    "ansible_facts": {
+        "napalm_interfaces": {
+            "Embedded-Service-Engine0/0": {
+                "description": "", 
+                "is_enabled": false, 
+                "is_up": false, 
+                "last_flapped": -1.0, 
+                "mac_address": "00:00:00:00:00:00", 
+                "speed": 10
+            }, 
+            "GigabitEthernet0/0": {
+                "description": "$ETH-LAN$$ETH-SW-LAUNCH$$INTF-INFO-GE 0/0$", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "88:5A:92:9E:C0:E0", 
+                "speed": 1000
+            }, 
+            "GigabitEthernet0/1": {
+                "description": "*** Trunk mot Homelab-sw01 G0/3 ***", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "88:5A:92:9E:C0:E1", 
+                "speed": 1000
+            }, 
+            "GigabitEthernet0/1.3": {
+                "description": "*** Data VLAN ***", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "88:5A:92:9E:C0:E1", 
+                "speed": 1000
+            }, 
+            "GigabitEthernet0/1.402": {
+                "description": "--- WAN VLAN 402 --- ", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "88:5A:92:9E:C0:E1", 
+                "speed": 1000
+            }, 
+            "Loopback0": {
+                "description": "", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "", 
+                "speed": 8000
+            }, 
+            "Virtual-Access1": {
+                "description": "", 
+                "is_enabled": true, 
+                "is_up": false, 
+                "last_flapped": -1.0, 
+                "mac_address": "", 
+                "speed": 100
+            }, 
+            "Virtual-Access2": {
+                "description": "***Internally created by SSLVPN context NHN-VPN***", 
+                "is_enabled": true, 
+                "is_up": true, 
+                "last_flapped": -1.0, 
+                "mac_address": "", 
+                "speed": 100
+            }, 
+            "Virtual-Template5": {
+                "description": "", 
+                "is_enabled": true, 
+                "is_up": false, 
+                "last_flapped": -1.0, 
+                "mac_address": "", 
+                "speed": 100
+            }
+        }
+    }, 
+    "changed": false
+}

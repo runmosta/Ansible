@@ -11,17 +11,20 @@
   - name: DEFINE PROVIDER
     set_fact:
       provider:
-        host: "{{ inventory_hostname }}"
+        hostname: "{{ inventory_hostname }}"
         username: "{{ creds['username'] }}"
         password: "{{ creds['password'] }}"
-        auth_pass: "{{ creds['auth_pass'] }}"
+        dev_os: "{{ os }}"
+
  
   - name: RUN " collect ios_facts "
-    ios_facts:
-      gather_subset:
-        - hardware
+    napalm_get_facts:
       provider: "{{ provider }}"
-    register: ios_facts_out
+      filter:
+         - "interfaces"
+      provider: "{{ provider }}"
+    register: napalm_facts_out
+
   - copy:  
-      content: "{{ ios_facts_out | to_nice_json }}"
+      content: "{{ napalm_facts_out | to_nice_json }}"
       dest: "Inventory/{{ inventory_hostname }}_iosfacts.json"

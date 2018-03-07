@@ -2,4 +2,4 @@
   var_plattform: "cisco_ios"
   var_connection: "netmiko_telnet"
   var_vty_transport: " transport input ssh"
- 
+  os: "ios"
